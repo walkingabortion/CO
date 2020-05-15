@@ -7,12 +7,8 @@ public class TestCPU {
     private int workload;
     private int[][] A, B, C;
 
-    public TestCPU(int workload)
+    public TestCPU()
     {
-        this.workload = workload;
-        A = new int[workload][ workload];
-        B = new int[workload][ workload];
-        C = new int[workload][ workload];
     }
 
     private void print()
@@ -37,8 +33,12 @@ public class TestCPU {
     }
     public void initialize(Object ... param)
     {
-        //this.workload = (Integer) param[0];
+        this.workload = (Integer) param[0];
+        //this.workload = workload;
 
+        A = new int[workload][ workload];
+        B = new int[workload][ workload];
+        C = new int[workload][ workload];
         Random rand = new Random();
 
         for(int i = 0; i < workload; i++)
@@ -62,7 +62,7 @@ public class TestCPU {
                 C[i][j] = 0;
                 for(int k = 0; k < workload && running; k++)
                 {
-                    C[i][j] += A[i][k]*B[k][j];
+                    C[i][j] += (A[i][k])*(B[k][j]);
                 }
             }
         }

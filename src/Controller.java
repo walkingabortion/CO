@@ -11,7 +11,7 @@ public class Controller {
     private ConsoleLogger log = new ConsoleLogger();
 
     @FXML
-    Label label1, label2, label3;
+    Label label1, label2, label3, label4;
 
     public void CPURun()
     {
@@ -21,6 +21,7 @@ public class Controller {
 
         iterations = 10;
         double totalTime = 0, score, medie;
+        double averageMedie = 0, averageScore = 0;
 
 
         //warmUp
@@ -47,6 +48,9 @@ public class Controller {
         score = workload /  (Math.log(medie) + 1);
         score = Math.log(score);
 
+        averageMedie += medie;
+        averageScore += score;
+
         label1.setText("Average time for workload " + workload + " is " + medie + " and the score is " + score);
 
 
@@ -65,6 +69,9 @@ public class Controller {
         medie =  (double)totalTime / iterations;
         score = workload /  (Math.log(medie) + 1);
         score = Math.log(score);
+
+        averageMedie += medie;
+        averageScore += score;
 
         label2.setText("Average time for workload " + workload + " is " + medie + " and the score is " + score);
 
@@ -86,7 +93,13 @@ public class Controller {
         score = workload /  (Math.log(medie) + 1);
         score = Math.log(score);
 
+        averageMedie += medie;
+        averageScore += score;
+
         label3.setText("Average time for workload " + workload + " is " + medie + " and the score is " + score);
+
+        label4.setText("Average time was " + averageMedie/3 + " and the average score is " + averageScore/3);
+
 
     }
 

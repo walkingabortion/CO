@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <Label contentDisplay="CENTER" layoutX="174.0" layoutY="14.0" text="Press run to bench your kench">
@@ -19,8 +15,9 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label fx:id="label1" layoutX="69.0" layoutY="78.0" />
-      <Label fx:id="label2" layoutX="69.0" layoutY="109.0" />
-      <Label fx:id="label3" layoutX="69.0" layoutY="143.0" />
+      <Label fx:id="label1" layoutX="69.0" layoutY="80.0" />
+      <Label fx:id="label2" layoutX="69.0" layoutY="110.0" />
+      <Label fx:id="label3" layoutX="69.0" layoutY="140.0" />
+      <Label fx:id="label4" layoutX="69.0" layoutY="170.0" />
    </children>
 </AnchorPane>

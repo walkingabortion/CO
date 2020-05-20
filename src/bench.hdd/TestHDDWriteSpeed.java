@@ -1,26 +1,39 @@
 package bench.hdd;
 
+import javafx.fxml.FXML;
+
+import java.io.File;
 import java.io.IOException;
 
-import bench.IBenchmark;
 
-public class HDDWriteSpeed implements IBenchmark {
 
-    @Override
+public class TestHDDWriteSpeed {
+
+    private double score;
+
+    public double getScore() {
+        return score;
+    }
+
+    public TestHDDWriteSpeed() {
+    }
+
     public void initialize(Object... params) {
     }
 
-    @Override
+
     public void warmUp() {
+
     }
 
-    @Override
+
     public void run() {
         throw new UnsupportedOperationException(
                 "Method not implemented. Use run(Object) instead");
     }
 
-    @Override
+
+
     public void run(Object... options) {
         FileWriter writer = new FileWriter();
         // either "fs" - fixed size, or "fb" - fixed buffer
@@ -28,20 +41,25 @@ public class HDDWriteSpeed implements IBenchmark {
         // true/false whether the written files should be deleted at the end
         Boolean clean = (Boolean) options[1];
 
-        String prefix = "path on disk + file name";
+        String prefix = (String) options[2];
+
         String suffix = ".dat";
         int startIndex = 0;
-        int endIndex = 8;
-        long fileSize = ... // 256 MB
-        int buffersize = ... // 4 KB
+        int endIndex = 7;
+        long fileSize = 256 * 1000000 ;// 256 MB
+        int bufferSize = 4096; // 4 KB
 
         try {
-            if (option.equals("?"))
-                writer.streamWriteFixedSize(prefix, suffix, startIndex,
-                        endIndex, fileSize, clean);
-            else if (option.equals("?"))
+            if (option.equals("fs"))
+            {writer.streamWriteFixedSize(prefix, suffix, startIndex,
+                    endIndex, fileSize, clean);
+            score=writer.getBenchScore();
+            }
+            else if (option.equals("fb")) {
                 writer.streamWriteFixedBuffer(prefix, suffix, startIndex,
                         endIndex, bufferSize, clean);
+                score=writer.getBenchScore();
+            }
             else
                 throw new IllegalArgumentException("Argument "
                         + options[0].toString() + " is undefined");
@@ -50,11 +68,15 @@ public class HDDWriteSpeed implements IBenchmark {
         }
     }
 
-    @Override
+
     public void clean() {
     }
 
-    @Override
+    public void get_score()
+    {
+
+    }
+
     public String getResult() {
         return null;
     }

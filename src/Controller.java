@@ -1,8 +1,11 @@
 import bench.TestCPU;
+import bench.hdd.TestHDDWriteSpeed;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import logging.ConsoleLogger;
+import logging.TimeUnit;
 import timer.Timer;
 
 public class Controller {
@@ -30,7 +33,6 @@ public class Controller {
         bench.initialize(workload);
         bench.run();
         timer.stop();
-
 
         //first run: workload 1000
         workload = 1000;
@@ -103,8 +105,35 @@ public class Controller {
 
     }
 
+    @FXML
+    Label fixed_file,fixed_buffer;
+
+    public void HDDrun(String path)
+    {
+        TestHDDWriteSpeed bench=new TestHDDWriteSpeed();
+
+        bench.run("fs",true,path);
+        fixed_file.setText("File write score fixed file size "
+                + String.format("%.2f", bench.getScore()) + " MB/sec");
+
+        bench.run("fb",true,path);
+        fixed_buffer.setText("File write score fixed buffer size "
+                + String.format("%.2f", bench.getScore()) + " MB/sec");
+
+    }
+
+    public void insert_path_window()
+    {
+
+
+    }
+
     public void startPressed(ActionEvent actionEvent) {
-        CPURun();
+
+
+
+        //CPURun();
+       HDDrun();
 
     }
 }

@@ -1,12 +1,18 @@
 import bench.TestCPU;
-import bench.hdd.TestHDDWriteSpeed;
+import benchHDD.HDDController;
+import benchHDD.TestHDDWriteSpeed;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import logging.ConsoleLogger;
-import logging.TimeUnit;
 import timer.Timer;
+
+import java.io.IOException;
 
 public class Controller {
 
@@ -15,6 +21,8 @@ public class Controller {
 
     @FXML
     Label label1, label2, label3, label4;
+
+    @FXML Button startButton;
 
     public void CPURun()
     {
@@ -108,9 +116,14 @@ public class Controller {
     @FXML
     Label fixed_file,fixed_buffer;
 
-    public void HDDrun(String path)
+    public void HDDrun()
     {
         TestHDDWriteSpeed bench=new TestHDDWriteSpeed();
+
+        HDDController h=new HDDController();
+
+        String path="Libraries\\Documents\\nice";
+
 
         bench.run("fs",true,path);
         fixed_file.setText("File write score fixed file size "
@@ -122,18 +135,30 @@ public class Controller {
 
     }
 
-    public void insert_path_window()
+    private void insert_path_window()
     {
+        Parent root= null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/resources/path.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        Stage stage= (Stage) startButton.getScene().getWindow();
+
+        stage.setTitle("Welcome!");
+        stage.setScene(new Scene(root, 399.0, 169.0));
+        stage.show();
 
     }
 
+
     public void startPressed(ActionEvent actionEvent) {
 
+       // insert_path_window(); // dont touch pls not good yet
 
-
-        //CPURun();
-       HDDrun();
+        CPURun();
+        HDDrun();
 
     }
 }

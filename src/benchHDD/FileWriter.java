@@ -1,4 +1,4 @@
-package bench.hdd;
+package benchHDD;
 
 import java.io.*;
 import java.text.DecimalFormat;

@@ -1,8 +1,5 @@
-package bench.hdd;
+package benchHDD;
 
-import javafx.fxml.FXML;
-
-import java.io.File;
 import java.io.IOException;
 
 

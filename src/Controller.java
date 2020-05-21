@@ -1,4 +1,5 @@
 import bench.TestCPU;
+import bench.TestGPU;
 import benchHDD.HDDController;
 import benchHDD.TestHDDWriteSpeed;
 import javafx.event.ActionEvent;
@@ -160,7 +161,7 @@ public class Controller {
 
     public void GPURun()
     {
-        TestCPU bench = new TestCPU();
+        //TestCPU bench = new TestCPU();
         TestGPU gpuBench = new TestGPU();
 
         int buffer_size = 1024*1024; // input float buffer size
@@ -184,9 +185,12 @@ public class Controller {
 
     public void startPressedCPU(ActionEvent actionEvent) {
         CPURun();
-        HDDrun();
-
+    }
     public void startPressedGPU(ActionEvent actionEvent) {
         GPURun();
+    }
+
+    public void startPressedHDD(ActionEvent actionEvent) {
+        HDDrun();
     }
 }

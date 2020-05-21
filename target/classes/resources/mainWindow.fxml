@@ -25,12 +25,19 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <Button fx:id="startButtonRAM" layoutX="200.0" layoutY="450.0" mnemonicParsing="false" onAction="#startPressedRAM" prefHeight="31.0" prefWidth="150.0" text="Benchmark RAM">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
       <Label fx:id="label1" layoutX="69.0" layoutY="80.0" />
       <Label fx:id="label2" layoutX="69.0" layoutY="110.0" />
       <Label fx:id="label3" layoutX="69.0" layoutY="140.0" />
       <Label fx:id="label4" layoutX="69.0" layoutY="170.0" />
       <Label id="HDD1" fx:id="fixed_file" layoutX="69.0" layoutY="200.0" />
       <Label id="HDD2" fx:id="fixed_buffer" layoutX="69.0" layoutY="230.0" />
+      <Label fx:id="wr_speed" layoutX="69.0" layoutY="260.0" />
+      <Label fx:id="r_speed" layoutX="69.0" layoutY="275.0" />
 
    </children>
 </AnchorPane>

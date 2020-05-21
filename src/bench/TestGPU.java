@@ -36,7 +36,7 @@ public class TestGPU {
         this.buffer_size = buffer_size;
     }
 
-    // get all GPUs (and CPUs if they supports SIMD architecture)
+    // Get all GPUs (and CPUs if they supports SIMD architecture)
     private static List<CLDevice> getDevices() {
         List<CLDevice> devices = new ArrayList<>();
         for (CLPlatform platform : JavaCL.listPlatforms()) {
@@ -47,7 +47,7 @@ public class TestGPU {
         return devices;
     }
 
-    // assign input buffer size and open FileWriter for writing results in a file
+    // Assign input buffer size and open FileWriter for writing results in a file
     public void initialize(int buffer_size, String results_log_file) {
         this.buffer_size = buffer_size;
         try {
@@ -58,7 +58,7 @@ public class TestGPU {
         devices = getDevices();
     }
 
-    // flush and close output file
+    // Flush and close output file
     public void deinitialize()
     {
         try {
@@ -69,56 +69,57 @@ public class TestGPU {
         }
     }
 
-    // actual benchmark function
+    // Actual benchmark function
     private void bench(CLContext context, int loop_count) {
-        // create a work queue for the device (GPU or CPU)
+        // Create a work queue for the device (GPU or CPU)
         CLQueue queue = context.createDefaultQueue();
 
-        // get device endianness (BIG or LITTLE)
+        // Get device endianness (BIG or LITTLE)
         ByteOrder byteOrder = context.getByteOrder();
 
-        // allocate and initialize an FP32 buffer
+        // Allocate and initialize an FP32 buffer
+        // The buffer will most likely get copied into the VRAM using a DMA HW block (Direct Memory Access)
         Pointer<Float> inPtr =
                 Pointer.allocateFloats(buffer_size).order(byteOrder);
 
-        // initialize the buffer with ascending values (buf[i] = i)
+        // Initialize the buffer with ascending values (buf[i] = i)
         for (int i = 0; i < buffer_size; ++i) {
             inPtr.set(i, (float) i);
         }
 
         CLBuffer<Float> in = context.createFloatBuffer(Usage.Input, inPtr);
 
-        // create an output buffer of the same size
+        // Create an output buffer of the same size
         CLBuffer<Float> out = context.createFloatBuffer(Usage.Output, buffer_size);
 
-        // transform the OpenCL kernel to text
+        // Transform the OpenCL kernel to text
         String str;
         try {
-            str = IOUtils.readTextClose(TestGPU.class.getResourceAsStream("bench.cl"));
+            str = IOUtils.readTextClose(TestGPU.class.getResourceAsStream("gpu_bench.cl"));
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
-        // pass the kernel text to OpenCL, which will parse it and make out of it an OpenCL routine
+        // Pass the kernel text to OpenCL, which will parse it and make out of it an OpenCL routine
         CLProgram program = context.createProgram(str).build();
 
         long best_time = Long.MAX_VALUE;
         long average_time = 0;
 
-        // execute the routine 'loop_count' times, we can obtain a best result and an average result
+        // Execute the routine 'loop_count' times, we can obtain a best result and an average result
         for (int c = 0; c < loop_count; ++c) {
-            // transform the routine into an OpenCL kernel (a set of instructions that the device (GPU or CPU) can execute)
-            // the kernel is compiled by an OpenCL compiler at run-time
-            // the compilation has to be done at runtime because the compiler
+            // Transform the routine into an OpenCL kernel (a set of instructions that the device (GPU or CPU) can execute)
+            // The kernel is compiled by an OpenCL compiler at run-time
+            // The compilation has to be done at runtime because the compiler
             // needs to know the device architecture (ex: Turing for NVIDIA RTX 2080 Ti, Navi RDNA for Radeon RX 5700, etc)
             CLKernel kernel = program.createKernel("bench", in, out, buffer_size);
             long start = System.nanoTime();
 
-            // enqueue the 'task' for the device to run (task meaning running the kernel)
+            // Enqueue the 'task' for the device to run (task meaning running the kernel)
             CLEvent event = kernel.enqueueNDRange(queue, new int[]{buffer_size});
 
-            // wait for the device to finish
+            // Wait for the device to finish
             Pointer<Float> result = out.read(queue, event).order(byteOrder);
 
             long end = System.nanoTime();
@@ -128,7 +129,7 @@ public class TestGPU {
         }
         average_time /= loop_count;
 
-        // write the results to the output file
+        // Write the results to the output file
         try {
             writer.write("Best time: " + String.format("%,.2f ms", best_time / 1000000.0) + "\n");
             writer.write("Average time: " + String.format("%,.2f ms", average_time / 1000000.0) + "\n\n");
@@ -137,7 +138,7 @@ public class TestGPU {
         }
     }
 
-    // run only 1 time
+    // Run only 1 time
     public int run() {
         for (CLDevice device : devices) {
             CLContext context =
@@ -152,7 +153,7 @@ public class TestGPU {
         return devices.size(); // return number of GPUs OpenCL found
     }
 
-    // run 'loop_count' times, so we can get an average benchmark result
+    // Run 'loop_count' times, so we can get an average benchmark result
     public int run_multiple_and_get_best(int loop_count) {
         for (CLDevice device : devices) {
             CLContext context =
@@ -167,7 +168,7 @@ public class TestGPU {
         return devices.size(); // return number of GPUs OpenCL found
     }
 
-    // also write the device to the output file
+    // Also write the device to the output file
     // because one can have multiple GPUs
     private void printDeviceInfo(CLContext context) {
         try {

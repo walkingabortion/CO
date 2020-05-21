@@ -15,7 +15,6 @@ import timer.Timer;
  */
 public class VirtualMemoryBenchmark  {
 
-	MemoryMapper core=null;
 
 	private String result1 = "";
 	private String result2="";
@@ -36,41 +35,51 @@ public class VirtualMemoryBenchmark  {
 		long fileSize = Long.parseLong(params[0].toString()); // e.g. 2-8GB
 		int bufferSize = Integer.parseInt(params[1].toString()); // e.g. 4KB
 
+		MemoryMapper core = null;
 		try {
-			core = new MemoryMapper("src\\Core\\_core", fileSize); // change path as needed
+			core = new MemoryMapper("src\\Core\\_core", fileSize);
 			byte[] buffer = new byte[bufferSize];
 			Random rand = new Random();
 
 			Timer timer = new Timer();
-			long time_taken=0;
+			long time_taken = 0;
 
 			// write to VM
 			timer.start();
 			for (long i = 0; i < fileSize; i += bufferSize) {
+				time_taken = timer.pause();
+
 				// generate random content (see assignments 9,11)
 				rand.nextBytes(buffer);
-				// write to memory mapper
-				core.put(i,buffer);
-			}
-			time_taken=timer.stop();
 
-			double speed =Double.valueOf(fileSize)/Double.valueOf(time_taken); /* fileSize/time MB/s */
+				timer.resume();
+
+				// write to memory mapper
+				core.put(i, buffer);
+			}
+
+
+			time_taken = timer.stop();
+
+			double speed = Double.valueOf(fileSize) / Double.valueOf(time_taken) / 1024 / 1024L * 1000000000L; /* fileSize/time MB/s */
 
 			result1 = "Wrote " + (fileSize / 1024 / 1024L)
-					+ " MB to virtual memory at " +String.format("%.2f",speed)+/*speed, with exactly 2 decimals*/  " MB/s";
+					+ " MB to virtual memory at " + String.format("%.2f", speed) +/*speed, with exactly 2 decimals*/  " MB/s";
 
 			// read from VM
 			timer.start();
 			for (long i = 0; i < fileSize; i += bufferSize) {
 				// get from memory mapper
-				core.get(i,bufferSize);
+				buffer = core.get(i, bufferSize);
 			}
-			time_taken=timer.stop();
-			speed = Double.valueOf(fileSize)/Double.valueOf(time_taken); /* MB/s */
+
+
+			time_taken = timer.stop();
+			speed = Double.valueOf(fileSize) / Double.valueOf(time_taken) / 1024 / 1024L * 1000000000L; /* MB/s */
 
 			// append to previous 'result' string
 			result2 += "Read " + (fileSize / 1024 / 1024L)
-					+ " MB from virtual memory at "+String.format("%.2f",speed)+ /*speed, with exactly 2 decimals*/  " MB/s";
+					+ " MB from virtual memory at " + String.format("%.2f", speed) + /*speed, with exactly 2 decimals*/  " MB/s";
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -80,10 +89,10 @@ public class VirtualMemoryBenchmark  {
 		}
 	}
 
-	public void clean() {
+	/*public void clean() {
 		if (core != null)
 			core.purge();
-	}
+	}*/
 
 	public String getResult1() {
 		return /*(1 == 1) ? "result" :*/ result1;

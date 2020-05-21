@@ -135,7 +135,7 @@ public class Controller {
             if (fsv.getSystemTypeDescription(path).equals("Local Disk"))
             {
                 String disk = path.getAbsolutePath()+"nice";
-                String desktopPath = System.getProperty("user.home") + "/Desktop/nice";
+                String desktopPath = System.getProperty("user.home") + "\\Desktop\\nice";
 
                 if(disk.charAt(0)=='C')
                     disk=desktopPath;

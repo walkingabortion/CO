@@ -14,15 +14,15 @@ public class Timer {
         totalTime += elapsed;
         return totalTime;
     }
-//
-//    public long pause() {
-//        elapsed = System.nanoTime() - elapsed;
-//
-//        totalTime += elapsed;
-//        return totalTime;
-//    }
-//
-//    public void resume() {
-//        elapsed = System.nanoTime();
-//    }
+
+    public long pause() {
+        elapsed = System.nanoTime() - elapsed;
+
+        totalTime += elapsed;
+        return totalTime;
+    }
+
+    public void resume() {
+        elapsed = System.nanoTime();
+    }
 }

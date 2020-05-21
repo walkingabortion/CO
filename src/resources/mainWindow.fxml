@@ -10,7 +10,12 @@
             <Font name="DejaVu Sans Bold" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="startButton" layoutX="260.0" layoutY="355.0" mnemonicParsing="false" onAction="#startPressed" prefHeight="31.0" prefWidth="59.0" text="Start">
+      <Button fx:id="startButtonCPU" layoutX="200.0" layoutY="355.0" mnemonicParsing="false" onAction="#startPressedCPU" prefHeight="31.0" prefWidth="150.0" text="Benchmark CPU">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="startButtonGPU" layoutX="200.0" layoutY="400.0" mnemonicParsing="false" onAction="#startPressedGPU" prefHeight="31.0" prefWidth="150.0" text="Benchmark GPU(s)">
          <font>
             <Font size="14.0" />
          </font>

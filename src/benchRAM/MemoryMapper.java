@@ -6,6 +6,8 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -131,7 +133,13 @@ public class MemoryMapper {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
-				coreFile.delete();
+				coreFile.deleteOnExit();
+
+				if(coreFile.delete())
+					System.out.println("Core file deleted");
+				else
+					System.out.println("Didn't delete core file");
+
 			}
 		}
 	}

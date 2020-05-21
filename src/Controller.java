@@ -193,13 +193,12 @@ public class Controller {
     public void RAMRun() {
         VirtualMemoryBenchmark ram_bench=new VirtualMemoryBenchmark();
         long fileSize=8L * 1024 * 1024 * 1024;
-        int bufferSize= 16*1024;
+        int bufferSize= 1024*1024;
 
         ram_bench.initialize();
         ram_bench.run(fileSize, bufferSize);
         wr_speed.setText(ram_bench.getResult1());
         r_speed.setText(ram_bench.getResult2());
-        ram_bench.clean();
 
     }
 

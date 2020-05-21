@@ -1,18 +1,15 @@
 import bench.TestCPU;
 import bench.TestGPU;
-import benchHDD.HDDController;
 import benchHDD.TestHDDWriteSpeed;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import logging.ConsoleLogger;
 import timer.Timer;
-
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
@@ -118,44 +115,52 @@ public class Controller {
     }
 
     @FXML
-    Label fixed_file,fixed_buffer;
+    Label fixed_file;
 
-    public void HDDrun()
+    public void HDDrun() throws IOException
     {
         TestHDDWriteSpeed bench=new TestHDDWriteSpeed();
 
-        HDDController h=new HDDController();
+        File[] paths;
+        FileSystemView fsv = FileSystemView.getFileSystemView();
 
-        String path="Libraries\\Documents\\nice";
+        // returns pathnames for files and directory
+        paths = File.listRoots();
 
+        String result="";
 
-        bench.run("fs",true,path);
-        fixed_file.setText("File write score fixed file size "
-                + String.format("%.2f", bench.getScore()) + " MB/sec");
+        for(File path:paths) {
 
-        bench.run("fb",true,path);
-        fixed_buffer.setText("File write score fixed buffer size "
-                + String.format("%.2f", bench.getScore()) + " MB/sec");
+            if (fsv.getSystemTypeDescription(path).equals("Local Disk"))
+            {
+                String disk = path.getAbsolutePath()+"nice";
+                String desktopPath = System.getProperty("user.home") + "/Desktop/nice";
 
-    }
+                if(disk.charAt(0)=='C')
+                    disk=desktopPath;
 
-    private void insert_path_window()
-    {
-        Parent root= null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/resources/path.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
+                result+=("drive " + disk.charAt(0) + "\n");
+
+                bench.run("fs", true, disk);
+                result+=("File write score fixed file size "
+                        + String.format("%.2f", bench.getScore()) + " MB/sec\n");
+
+                bench.run("fb", true, disk);
+                result+="File write score fixed file size "
+                        + String.format("%.2f", bench.getScore()) + " MB/sec\n";
+
+            }
         }
 
-        Stage stage= (Stage) startButton.getScene().getWindow();
+        String log="hdd_bench_log.txt";
+        FileWriter write = new FileWriter(System.getProperty("user.home") +
+                "\\Desktop" + "\\" + log);
+        write.write(result);
+        write.close();
 
-        stage.setTitle("Welcome!");
-        stage.setScene(new Scene(root, 399.0, 169.0));
-        stage.show();
-
+        fixed_file.setText("HDD benchmark results written at "+ System.getProperty("user.home") +
+                "\\Desktop" + "\\" + log);
     }
-
 
     public void GPURun()
     {
@@ -189,6 +194,10 @@ public class Controller {
     }
 
     public void startPressedHDD(ActionEvent actionEvent) {
-        HDDrun();
+        try {
+            HDDrun();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

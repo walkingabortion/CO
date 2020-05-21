@@ -1,0 +1,6 @@
+.root-pane {
+   -fx-background-image: url("../../../src/resources/benches.jpg");
+   -fx-background-repeat: repeat;
+   -fx-background-size: cover;
+   -fx-background-position: center center;
+}

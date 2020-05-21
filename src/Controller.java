@@ -1,4 +1,5 @@
 import bench.TestCPU;
+import bench.TestGPU;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -103,8 +104,35 @@ public class Controller {
 
     }
 
-    public void startPressed(ActionEvent actionEvent) {
-        CPURun();
+    public void GPURun()
+    {
+        TestCPU bench = new TestCPU();
+        TestGPU gpuBench = new TestGPU();
 
+        int buffer_size = 1024*1024; // input float buffer size
+        int repeat_times = 5;
+
+        String gpu_bench_log = "gpu_benchmark.log";
+        gpuBench.initialize(buffer_size, gpu_bench_log);
+
+        int num_gpus;
+        timer.start();
+        num_gpus = gpuBench.run_multiple_and_get_best(repeat_times);
+        long elapsed_time = timer.stop();
+
+        gpuBench.deinitialize();
+
+        label1.setText("Found and successfully benchmarked " + num_gpus + " GPUs ");
+        label2.setText("Workload: " + buffer_size * 1000 * 5 + " FP32 operations. Repeated " + repeat_times + " times");
+        label3.setText("Total elapsed time: " + Math.floor((elapsed_time/1000000000.0) * 100) / 100 + " s");
+        label4.setText("Benchmark results written in " + gpu_bench_log);
+    }
+
+    public void startPressedCPU(ActionEvent actionEvent) {
+        CPURun();
+    }
+
+    public void startPressedGPU(ActionEvent actionEvent) {
+        GPURun();
     }
 }

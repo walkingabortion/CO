@@ -147,7 +147,7 @@ public class Controller {
                         + String.format("%.2f", bench.getScore()) + " MB/sec\n");
 
                 bench.run("fb", true, disk);
-                result+="File write score fixed file size "
+                result+="File write score fixed buffer size "
                         + String.format("%.2f", bench.getScore()) + " MB/sec\n";
 
             }

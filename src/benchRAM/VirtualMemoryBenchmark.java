@@ -37,7 +37,7 @@ public class VirtualMemoryBenchmark  {
 		int bufferSize = Integer.parseInt(params[1].toString()); // e.g. 4KB
 
 		try {
-			core = new MemoryMapper("src/Core/_core", fileSize); // change path as needed
+			core = new MemoryMapper("src\\Core\\_core", fileSize); // change path as needed
 			byte[] buffer = new byte[bufferSize];
 			Random rand = new Random();
 

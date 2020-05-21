@@ -62,7 +62,7 @@ public class Controller {
         }
         medie =  (double)totalTime / iterations;
         score = workload /  (Math.log(medie) + 1);
-        score = Math.log(score);
+        //score = Math.log(score);
 
         averageMedie += medie;
         averageScore += score;
@@ -84,7 +84,7 @@ public class Controller {
         }
         medie =  (double)totalTime / iterations;
         score = workload /  (Math.log(medie) + 1);
-        score = Math.log(score);
+        //score = Math.log(score);
 
         averageMedie += medie;
         averageScore += score;
@@ -107,7 +107,7 @@ public class Controller {
         }
         medie =  (double)totalTime / iterations;
         score = workload /  (Math.log(medie) + 1);
-        score = Math.log(score);
+        //score = Math.log(score);
 
         averageMedie += medie;
         averageScore += score;

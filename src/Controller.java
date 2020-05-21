@@ -118,7 +118,7 @@ public class Controller {
     @FXML
     Label fixed_file;
 
-    public void HDDrun() throws IOException
+    public void HDDrun()
     {
         TestHDDWriteSpeed bench=new TestHDDWriteSpeed();
 
@@ -154,10 +154,14 @@ public class Controller {
         }
 
         String log="hdd_bench_log.txt";
-        FileWriter write = new FileWriter(System.getProperty("user.home") +
-                "\\Desktop" + "\\" + log);
-        write.write(result);
-        write.close();
+        try {
+            FileWriter write = new FileWriter(System.getProperty("user.home") +
+                    "\\Desktop" + "\\" + log);
+            write.write(result);
+            write.close();
+            }
+        catch (IOException e)
+        {return;}
 
         fixed_file.setText("HDD benchmark results written at "+ System.getProperty("user.home") +
                 "\\Desktop" + "\\" + log);
@@ -211,11 +215,8 @@ public class Controller {
     }
 
     public void startPressedHDD(ActionEvent actionEvent) {
-        try {
-            HDDrun();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        HDDrun();
+
     }
     public void startPressedRAM(ActionEvent actionEvent) { RAMRun(); }
 }

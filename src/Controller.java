@@ -2,6 +2,7 @@ import bench.TestCPU;
 import bench.TestGPU;
 import benchHDD.HDDController;
 import benchHDD.TestHDDWriteSpeed;
+import benchRAM.VirtualMemoryBenchmark;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -181,6 +182,22 @@ public class Controller {
         label4.setText("Benchmark results written in " + gpu_bench_log);
     }
 
+    @FXML
+    Label wr_speed,r_speed;
+
+    public void RAMRun() {
+        VirtualMemoryBenchmark ram_bench=new VirtualMemoryBenchmark();
+        long fileSize=8L * 1024 * 1024 * 1024;
+        int bufferSize= 16*1024;
+
+        ram_bench.initialize();
+        ram_bench.run(fileSize, bufferSize);
+        wr_speed.setText(ram_bench.getResult1());
+        r_speed.setText(ram_bench.getResult2());
+        ram_bench.clean();
+
+    }
+
     public void startPressedCPU(ActionEvent actionEvent) {
         CPURun();
     }
@@ -191,4 +208,5 @@ public class Controller {
     public void startPressedHDD(ActionEvent actionEvent) {
         HDDrun();
     }
+    public void startPressedRAM(ActionEvent actionEvent) { RAMRun(); }
 }

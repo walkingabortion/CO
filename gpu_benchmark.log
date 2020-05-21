@@ -1,15 +1,15 @@
+Platform: Intel(R) OpenCL
+Device: Intel(R) HD Graphics 620
+Best time: 1,199.98 ms
+Average time: 1,210.59 ms
+
+Platform: Intel(R) OpenCL
+Device: Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+Best time: 3,021.07 ms
+Average time: 3,049.32 ms
+
 Platform: NVIDIA CUDA
-Device: GeForce 920M
-Best time: 733,94 ms
-Average time: 742,87 ms
-
-Platform: Intel(R) OpenCL
-Device: Intel(R) HD Graphics 5500
-Best time: 1.033,55 ms
-Average time: 1.035,17 ms
-
-Platform: Intel(R) OpenCL
-Device: Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz
-Best time: 4.498,63 ms
-Average time: 4.714,08 ms
+Device: GeForce GTX 950M
+Best time: 318.88 ms
+Average time: 324.78 ms
 

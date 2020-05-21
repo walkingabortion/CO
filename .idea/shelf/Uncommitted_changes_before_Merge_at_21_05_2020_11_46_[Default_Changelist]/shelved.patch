@@ -1,0 +1,27 @@
+Index: src/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import bench.TestCPU;\r\nimport bench.TestGPU;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.Label;\r\nimport logging.ConsoleLogger;\r\nimport timer.Timer;\r\n\r\npublic class Controller {\r\n\r\n    private Timer timer = new Timer();\r\n    private ConsoleLogger log = new ConsoleLogger();\r\n\r\n    @FXML\r\n    Label label1, label2, label3, label4;\r\n\r\n    public void CPURun()\r\n    {\r\n        TestCPU bench = new TestCPU();\r\n\r\n        int workload, iterations;\r\n\r\n        iterations = 10;\r\n        double totalTime = 0, score, medie;\r\n        double averageMedie = 0, averageScore = 0;\r\n\r\n\r\n        //warmUp\r\n        workload = 1000;\r\n        timer.start();\r\n        bench.initialize(workload);\r\n        bench.run();\r\n        timer.stop();\r\n\r\n\r\n        //first run: workload 1000\r\n        workload = 1000;\r\n\r\n        for(int i = 0; i < iterations; i++)\r\n        {\r\n            bench.initialize(workload);\r\n\r\n            timer.start();\r\n            bench.run();\r\n\r\n            totalTime += timer.stop();\r\n        }\r\n        medie =  (double)totalTime / iterations;\r\n        score = workload /  (Math.log(medie) + 1);\r\n        score = Math.log(score);\r\n\r\n        averageMedie += medie;\r\n        averageScore += score;\r\n\r\n        label1.setText(\"Average time for workload \" + workload + \" is \" + medie + \" and the score is \" + score);\r\n\r\n\r\n        //second run: workload 5000\r\n        workload = 5000;\r\n\r\n        for(int i = 0; i < iterations; i++)\r\n        {\r\n            bench.initialize(workload);\r\n\r\n            timer.start();\r\n            bench.run();\r\n\r\n            totalTime += timer.stop();\r\n        }\r\n        medie =  (double)totalTime / iterations;\r\n        score = workload /  (Math.log(medie) + 1);\r\n        score = Math.log(score);\r\n\r\n        averageMedie += medie;\r\n        averageScore += score;\r\n\r\n        label2.setText(\"Average time for workload \" + workload + \" is \" + medie + \" and the score is \" + score);\r\n\r\n\r\n\r\n        //third run: workload 10000\r\n        workload = 10000;\r\n\r\n        for(int i = 0; i < iterations; i++)\r\n        {\r\n            bench.initialize(workload);\r\n\r\n            timer.start();\r\n            bench.run();\r\n\r\n            totalTime += timer.stop();\r\n        }\r\n        medie =  (double)totalTime / iterations;\r\n        score = workload /  (Math.log(medie) + 1);\r\n        score = Math.log(score);\r\n\r\n        averageMedie += medie;\r\n        averageScore += score;\r\n\r\n        label3.setText(\"Average time for workload \" + workload + \" is \" + medie + \" and the score is \" + score);\r\n\r\n        label4.setText(\"Average time was \" + averageMedie/3 + \" and the average score is \" + averageScore/3);\r\n\r\n\r\n    }\r\n\r\n    public void GPURun()\r\n    {\r\n        TestCPU bench = new TestCPU();\r\n        TestGPU gpuBench = new TestGPU();\r\n\r\n        int buffer_size = 1024*1024; // input float buffer size\r\n        int repeat_times = 5;\r\n\r\n        String gpu_bench_log = \"gpu_benchmark.log\";\r\n        gpuBench.initialize(buffer_size, gpu_bench_log);\r\n\r\n        int num_gpus;\r\n        timer.start();\r\n        num_gpus = gpuBench.run_multiple_and_get_best(repeat_times);\r\n        long elapsed_time = timer.stop();\r\n\r\n        gpuBench.deinitialize();\r\n\r\n        label1.setText(\"Found and successfully benchmarked \" + num_gpus + \" GPUs \");\r\n        label2.setText(\"Workload: \" + buffer_size * 1000 * 5 + \" FP32 operations. Repeated \" + repeat_times + \" times\");\r\n        label3.setText(\"Total elapsed time: \" + Math.floor((elapsed_time/1000000000.0) * 100) / 100 + \" s\");\r\n        label4.setText(\"Benchmark results written in \" + gpu_bench_log);\r\n    }\r\n\r\n    public void startPressedCPU(ActionEvent actionEvent) {\r\n        CPURun();\r\n    }\r\n\r\n    public void startPressedGPU(ActionEvent actionEvent) {\r\n        GPURun();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Controller.java	(revision aa53f4943fe9126da75cfe562dd8622bc90a8b13)
++++ src/Controller.java	(date 1590050251242)
+@@ -56,7 +56,7 @@
+ 
+ 
+         //second run: workload 5000
+-        workload = 5000;
++        workload = 4000;
+ 
+         for(int i = 0; i < iterations; i++)
+         {
+@@ -79,7 +79,7 @@
+ 
+ 
+         //third run: workload 10000
+-        workload = 10000;
++        workload = 7000;
+ 
+         for(int i = 0; i < iterations; i++)
+         {

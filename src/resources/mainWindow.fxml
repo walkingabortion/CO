@@ -3,29 +3,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<?import java.net.URL?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller" styleClass="root-pane">
    <children>
-      <Label contentDisplay="CENTER" layoutX="174.0" layoutY="14.0" text="Press run to bench your kench">
+      <Label contentDisplay="CENTER" layoutX="250.0" layoutY="14.0" text="Press run to bench your kench">
          <font>
             <Font name="DejaVu Sans Bold" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="startButtonCPU" layoutX="200.0" layoutY="300.0" mnemonicParsing="false" onAction="#startPressedCPU" prefHeight="31.0" prefWidth="150.0" text="Benchmark CPU">
+      <Button fx:id="startButtonCPU" layoutX="275.0" layoutY="300.0" mnemonicParsing="false" onAction="#startPressedCPU" prefHeight="31.0" prefWidth="150.0" text="Benchmark CPU">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="startButtonGPU" layoutX="200.0" layoutY="350.0" mnemonicParsing="false" onAction="#startPressedGPU" prefHeight="31.0" prefWidth="150.0" text="Benchmark GPU(s)">
+      <Button fx:id="startButtonGPU" layoutX="275.0" layoutY="350.0" mnemonicParsing="false" onAction="#startPressedGPU" prefHeight="31.0" prefWidth="150.0" text="Benchmark GPU(s)">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="startButtonHDD" layoutX="200.0" layoutY="400.0" mnemonicParsing="false" onAction="#startPressedHDD" prefHeight="31.0" prefWidth="150.0" text="Benchmark HDD">
+      <Button fx:id="startButtonHDD" layoutX="275.0" layoutY="400.0" mnemonicParsing="false" onAction="#startPressedHDD" prefHeight="31.0" prefWidth="150.0" text="Benchmark HDD">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="startButtonRAM" layoutX="200.0" layoutY="450.0" mnemonicParsing="false" onAction="#startPressedRAM" prefHeight="31.0" prefWidth="150.0" text="Benchmark RAM">
+      <Button fx:id="startButtonRAM" layoutX="275.0" layoutY="450.0" mnemonicParsing="false" onAction="#startPressedRAM" prefHeight="31.0" prefWidth="150.0" text="Benchmark RAM">
          <font>
             <Font size="14.0" />
          </font>
@@ -40,4 +41,7 @@
       <Label fx:id="r_speed" layoutX="69.0" layoutY="275.0" />
 
    </children>
+   <stylesheets>
+      <URL value="@style.css"/>
+   </stylesheets>
 </AnchorPane>

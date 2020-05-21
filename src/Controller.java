@@ -62,7 +62,6 @@ public class Controller {
         }
         medie =  (double)totalTime / iterations;
         score = workload /  (Math.sqrt(medie) + 1);
-        //score = Math.log(score);
 
         averageMedie += medie;
         averageScore += score;
@@ -84,7 +83,7 @@ public class Controller {
         }
         medie =  (double)totalTime / iterations;
         score = workload /  (Math.sqrt(medie) + 1);
-        //score = Math.log(score);
+
 
         averageMedie += medie;
         averageScore += score;
@@ -107,14 +106,13 @@ public class Controller {
         }
         medie =  (double)totalTime / iterations;
         score = workload /  (Math.sqrt(medie) + 1);
-        //score = Math.log(score);
 
         averageMedie += medie;
         averageScore += score;
 
         label3.setText("Workload: " + workload + " in " + medie + " ns");
 
-        label4.setText("The final score is " + df2.format(averageScore/3));
+        label4.setText("The final score is " + df2.format(averageScore/(3 * 10)));
 
 
     }
